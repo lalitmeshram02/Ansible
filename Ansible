@@ -30,6 +30,7 @@ o/p : Showing status enabled
 
 
 ======================================================================================================================================================
+
 Enabled Firewall Service:
 #firewall-cmd --list-services
 #firewall-cmd --permanent --add-service=http
@@ -146,7 +147,7 @@ Create inventory
 192.168.136.164
 
 [prod]
-192.168.136.149
+192.168.136.156
 
 [dev]
 192.168.136.163
