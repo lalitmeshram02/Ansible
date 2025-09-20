@@ -1,0 +1,21 @@
+#ansible-vault create file1 -------------> Create a encrypted file 
+
+#ansible-vault view file1   ----------------> View encrypted file
+
+#ansible-vault edit file1  ----------------------> Edit the file 
+
+#ansible-vault rekey file1 -------------------> Change the password
+
+#ansible-vault decrypt file -------------------> Decrypt the file 
+
+#ansible-vault encrypt file  -----------> Encrypt the regular file 
+
+Create a file where password is store 
+
+#vim password
+  redhat
+:wq!
+
+#ansible-vault create mayank --vault-password-file Password
+
+#ansible-vault view mayank --vault-password-file Password
