@@ -224,6 +224,10 @@ Add User:
 
 #ansible-playbook adduser.yaml ============> Run Playbook 
 
+#ansible -m command -a "cat /etc/passwd"   OR ansible servera -m shell -a "getent passwd temipadm"  OR ansible servera -m command -a "getent passwd temipadm
+
+
+
 
 
 
