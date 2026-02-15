@@ -226,6 +226,57 @@ Add User:
 
 #ansible -m command -a "cat /etc/passwd"   OR ansible servera -m shell -a "getent passwd temipadm"  OR ansible servera -m command -a "getent passwd temipadm
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#vim package.yaml
+
+---
+- name: install httpd package
+  hosts: servera
+  become: true
+  tasks:
+    - name: install httpd package
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+    - name: Restart httpd service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+
+#ansible-playbook package.yaml --syntax-check =========> Syntax Check
+
+#ansible-playbook package.yaml ================> Run Playbook
+
+[ansible@workstation ansible]$ ansible-playbook package.yaml
+
+Output:
+PLAY [install httpd package] ************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************************************************************************************
+ok: [serverb]
+
+TASK [install httpd package] ************************************************************************************************************************************************************
+changed: [serverb]
+
+TASK [Restart httpd service] ************************************************************************************************************************************************************
+changed: [serverb]
+
+PLAY RECAP ******************************************************************************************************************************************************************************
+serverb                    : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+
+#[ansible@workstation ansible]$ ansible -m command serverb -a "systemctl status httpd.service"
+
+#[ansible@workstation ansible]$ ansible -m shell serverb -a "systemctl status httpd.service"
+
+
+====================================================================================================================================================================
+
+
+
+
+
 
 
 
