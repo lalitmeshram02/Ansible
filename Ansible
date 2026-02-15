@@ -202,3 +202,30 @@ dev
 #ansible-doc  yum   ==========================> Complete detail of yum module
 
 ==============================================================================================================================================================
+Ansible Playbook:
+
+Add User:
+
+#vim adduser.yaml
+
+---
+- name: add user temipadm
+  hosts: 192.168.136.184
+  become: true
+  tasks:
+    - name: add user temipadm
+      ansible.builtin.user:
+        name: temipadm
+        state: present
+
+:wq!
+
+# ansible-playbook adduser.yaml --synatx-check =========> Check Syntax before run playbook
+
+#ansible-playbook adduser.yaml ============> Run Playbook 
+
+
+
+
+
+
