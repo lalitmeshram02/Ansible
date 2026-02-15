@@ -3,10 +3,13 @@
 1. Ansible is Open Source IT Configuration Managment Tool.
 2. Push Based Mechanism.
 3. Agentless and SSH Security
+4. 
 
 =========================================================================================================================================================================================================
-Local Repository Create a Repository:
+*Local Repository Create a Repository:
 
+
+[On Controll Node]---Create Yum Repository
 #cd /etc/yum.repos.d/
 #ll
 #vim local.repo  ====> Create a file 
@@ -23,13 +26,17 @@ baseurl=file:///run/media/lalit/RHEL-9-1-0-BaseOS-x86_64/AppStream
 gpgcheck=0
 enabled=1
 
-:wq!
+:wq![Save & Quite]
 
 #dnf repolist all 
 o/p : Showing status enabled
 
 
-======================================================================================================================================================
+#dnf install httpd ====> Install httpd Package (Web Package)
+
+#systemctl start httpd.service
+
+#systemctl enabled httpd.service
 
 Enabled Firewall Service:
 #firewall-cmd --list-services
@@ -38,8 +45,23 @@ Enabled Firewall Service:
 #firewall-cmd --list-services
 #curl workstation
 
-==========================================================================================================================================================
-Online Repository:
+#cd /var/www/html
+
+#mkdir DVD
+
+#cd DVD
+
+#cp -rvf /run/media/lalit/RHEL-9-1-0-BaseOS-x86_64/* . ======> copy all the file in current Directory
+
+=============================================================================================================================================================
+
+[On Managed Node]--- Create Yum Repository [Online Repository]
+
+#cd /etc/yum.repos.d/
+#ll
+#vim local.repo  ====> Create a file 
+
+#vim local.repo  ====> Create a file 
 
 [BASEID]
 name=BaseOS
@@ -53,15 +75,13 @@ baseurl=http://workstation/DVD/AppStream
 gpgcheck=0
 enabled=1
 
-:wq!
+:wq![Save & Quite]
 
-#dnf repolist all
+#dnf repolist all 
+o/p : Showing status enabled
 
-O/p : Showing status enabled
+======================================================================================================================================================
 
-
-
-===========================================================================================================================================================
 Creating a user on on all machine
 
 #adduser ansible
@@ -76,39 +96,42 @@ ansible ALL=(ALL)  NOPASSWD:ALL
 
 Login using ansible user.
 
-	#ssh-keygen
+#su - ansible
+
+#ssh-keygen
 
 #cd .ssh
 
 #ssh-copied ansible@192.168.136.163    =======> Copy public key of master machine to managed node.
 
+#ssh ansible@192.168.136.163   =====> Login Successfuly 
+
 ===============================================================================================================================================================
-
+[On Controll Node]
 #dnf install python3-pip
-
 #pip3.9 install 'ansible-navigator[ansible-core]'==2.1.0
-
 
 Login using ansible user #su - ansible
 
-#mkdir ansible 
+#mkdir ansible  ====> Create Directory 
+#cd ansible
 
 #ansible-navigator
 
 #ansible-navigator --version
-o/p ansible-navigator 2.1.0
+o/p ansible [core 2.15.13]
 
-#ansible --list-host prod
+#ansible --list-host prod 
 o/p: hosts (1):
     192.168.136.163
 	
-#ansible --list-host all
+#ansible --list-host all   =====> Showing all the managed node 
 o/p: hosts (2):
     192.168.136.153
     192.168.136.163
 
 #ansible --version
-
+Output:
 ansible [core 2.15.13]
   config file = /home/ansible/ansible/ansible.cfg
   configured module search path = ['/home/ansible/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
@@ -120,6 +143,10 @@ ansible [core 2.15.13]
   libyaml = True
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
+[On Controll Node]
+
+Login using ansible user   #su - ansible
+
 #cd ansible
 
 Create a ansible.cfg file
@@ -137,7 +164,7 @@ become_method = sudo
 become_user = root
 become_ask_pass = false
 --------------------------------------------------------------------------------------------------------------
-Create inventory 
+*Create inventory  [On Controll Node]
 
 #vim inventory
 
@@ -173,7 +200,5 @@ dev
 #ansible-doc --list    ========================>  Showing the list of all modules
 
 #ansible-doc  yum   ==========================> Complete detail of yum module
-
-
 
 ==============================================================================================================================================================
